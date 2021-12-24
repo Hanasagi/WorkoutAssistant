@@ -54,8 +54,7 @@ export default {
       let ms=this.$refs.ms;
 
       if(e.target.getAttribute("data-event")==="start"){ 
-        console.log(parseInt(this.currentExerciseObject['setsNumber'])-1+'')
-
+ 
         if(this.program.length!==0 || this.program!==null){
           
           if(parseInt(this.currentExerciseObject['setsNumber'])<=0 && this.currentExercise<this.program.length){
