@@ -17,6 +17,7 @@ export default {
       restTimer:false,
       soundDisabled:false,
       restTime:"",
+      finalRestTime:"",
       currentTime:0
     }
   },
@@ -52,7 +53,7 @@ export default {
       let hours=this.$refs.hours;
       let ms=this.$refs.ms;
 
-      if(e.target.getAttribute("data-event")==="start"){
+      if(e.target.getAttribute("data-event")==="start"){ 
         if(this.program!==[]){
           
           if(parseInt(this.currentExerciseObject['setsNumber'])<=0 && this.currentExercise<this.program.length){
@@ -79,6 +80,16 @@ export default {
         e.target.innerText="stop timer"
         e.target.setAttribute("data-event","stop");
 
+        this.finalRestTime=(this.currentTime+parseInt(this.restTime)*100);
+        console.log(this.finalRestTime);
+              if(this.finalRestTime.toString().includes("60")){
+                let finalRestTime=this.finalRestTime.toString();
+              let minutesIndex=parseInt(finalRestTime.indexOf("60")-1)   
+              finalRestTime=finalRestTime.replace("60","00")
+              finalRestTime=finalRestTime.substring(0,minutesIndex)+(parseInt(finalRestTime[minutesIndex])+1)+finalRestTime.substring(minutesIndex+1)
+              this.finalRestTime=parseInt(finalRestTime);
+      }
+      console.log(this.finalRestTime);
         this.timer = setInterval(()=>{
           if(this.restTimer && this.restTime!==""){
             this.checkRestTime(minutes.innerText,seconds.innerText,ms.innerText);
@@ -242,7 +253,7 @@ export default {
       this.$refs.restTimeSeconds.placeholder=""
       if(e.target.getAttribute("data-time")==="minutes"){
         restTime=""
-        if(this.$refs.restTimeSeconds.value===""){
+        if(this.$refs.restTimeSeconds.value==="" && e.target.value!==""){
           restTime=parseInt(e.target.value)*100+'';
         }else{
           restTime=e.target.value+":"+this.$refs.restTimeSeconds.value;
@@ -251,7 +262,12 @@ export default {
         if(this.$refs.restTimeMinute.value===""){
           restTime=":"+e.target.value;
         }else{
-          restTime=this.$refs.restTimeMinute.value+":"+e.target.value;
+          if(e.target.value==""){
+            restTime=parseInt(this.$refs.restTimeMinute.value*100)+":"+e.target.value;
+          }else{
+            restTime=this.$refs.restTimeMinute.value+":"+e.target.value;
+          }
+          
         }
       }
 
@@ -264,7 +280,9 @@ export default {
     },
     checkRestTime(minutes,seconds,ms){
       let time=parseInt(minutes+seconds+ms);
-      if(time===(this.currentTime+parseInt(this.restTime)*100)){
+      
+      console.log(time,this.finalRestTime)
+      if(time===this.finalRestTime){
         if(!this.soundDisabled){
           let audio = new Audio(require("@/assets/mixkit-simple-game-countdown-921.mp3"));
           audio.play();
