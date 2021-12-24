@@ -54,7 +54,9 @@ export default {
       let ms=this.$refs.ms;
 
       if(e.target.getAttribute("data-event")==="start"){ 
-        if(this.program!==[]){
+        console.log(parseInt(this.currentExerciseObject['setsNumber'])-1+'')
+
+        if(this.program.length!==0 || this.program!==null){
           
           if(parseInt(this.currentExerciseObject['setsNumber'])<=0 && this.currentExercise<this.program.length){
             let el=this.$refs.exerciseList;
@@ -72,6 +74,7 @@ export default {
            
             
           }else if(parseInt(this.currentExerciseObject['setsNumber'])>0){
+            console.log(this.currentExercise);
             this.currentExerciseObject['setsNumber']=parseInt(this.currentExerciseObject['setsNumber'])-1+''
           }
         }
@@ -80,16 +83,17 @@ export default {
         e.target.innerText="stop timer"
         e.target.setAttribute("data-event","stop");
 
+        if(this.restTimer && this.restTime!==""){
         this.finalRestTime=(this.currentTime+parseInt(this.restTime)*100);
-        console.log(this.finalRestTime);
               if(this.finalRestTime.toString().includes("60")){
                 let finalRestTime=this.finalRestTime.toString();
               let minutesIndex=parseInt(finalRestTime.indexOf("60")-1)   
               finalRestTime=finalRestTime.replace("60","00")
               finalRestTime=finalRestTime.substring(0,minutesIndex)+(parseInt(finalRestTime[minutesIndex])+1)+finalRestTime.substring(minutesIndex+1)
               this.finalRestTime=parseInt(finalRestTime);
+            }
       }
-      console.log(this.finalRestTime);
+
         this.timer = setInterval(()=>{
           if(this.restTimer && this.restTime!==""){
             this.checkRestTime(minutes.innerText,seconds.innerText,ms.innerText);
@@ -171,7 +175,19 @@ export default {
         this.program[this.editIndex]=exercise;
         this.edit=false;
       }
-      
+      if(this.program.length===0){
+         
+        let checkEl= setInterval(()=>{
+            let el=this.$refs.exerciseList;
+            if(el!==null){
+              el.children[this.currentExercise].style.outline="2px solid #35605A";
+            this.currentExerciseObject=this.program[this.currentExercise];
+            clearInterval(checkEl);
+            }
+                     },100)
+        
+      }
+      console.log(this.currentExerciseObject)
       localStorage.setItem("program",JSON.stringify(this.program))
       this.openComponent(false);
     },
@@ -280,8 +296,6 @@ export default {
     },
     checkRestTime(minutes,seconds,ms){
       let time=parseInt(minutes+seconds+ms);
-      
-      console.log(time,this.finalRestTime)
       if(time===this.finalRestTime){
         if(!this.soundDisabled){
           let audio = new Audio(require("@/assets/mixkit-simple-game-countdown-921.mp3"));
