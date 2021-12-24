@@ -1,0 +1,393 @@
+.home{
+  width: 100vw;
+  height: 100vh;
+  background: var(--background);
+  overflow: hidden;
+}
+
+.grid {
+  display: grid; 
+  grid-template-columns: 40vw 60vw; 
+  z-index: 1;
+  height: inherit;
+}
+.a {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.timer-wrapper{
+  color: white;
+  
+}
+.timer{
+  font-size: 10vw;
+  position: relative;
+  left: 0;
+}
+.ms{
+  font-size: 5vw;
+  color: #b5b5b5;
+}
+.start-timer{
+  background: #D8E4FF;
+  border: none;
+  color: #35605A;
+  padding: 1vw;
+  border-radius: 2vw;
+  text-transform: uppercase;
+  margin: 0 0.5vw;
+  font-size: 1.1vw;
+}
+.workout-list{
+  width: 35vw;
+  height: 95vh;
+  margin: auto;
+  background: #061b28;
+  outline: 0.20vw solid var(--el-background);
+  overflow: hidden scroll;
+}
+.workout-list::-webkit-scrollbar{
+  display: none;
+}
+.add-new-workout{
+  width: 100%;
+  border: none;
+  background: #133144;
+  margin: 0;
+  font-size: 1.5vw;
+  padding: 0.5vw;
+  color: white;
+}
+.add-workout-component{
+  background: rgba(0,0,0,0.7);
+  width: inherit;
+  height: inherit;
+  z-index: 98;
+  position: absolute;
+}
+.add-workout-component>.wrapper{
+  width: 45vw;
+  height: 35vw;
+  background: var(--el-background);
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 0 1vw 0 0;
+}
+.close-component{
+  width: 100%;
+  display: grid;
+  justify-content: end;
+}
+.close-component>svg{
+  fill: #B33A3A;
+  width: 2vw;
+  height: 2vw;
+
+}
+form{
+  width: inherit;
+  height: inherit;
+}
+.normal-exercise,.superset{
+  width: 95%;
+  height: 41%;
+  margin: auto;
+  margin-top: 1vw;
+  background: #0e2330;
+  padding: 0.5vw;
+}
+.normal-exercise h5,.superset h5{
+  color: white;
+  margin: 0.5vw 0;
+  text-transform: uppercase;
+  font-weight: lighter;
+  font-size: 1.1vw;
+}
+.normal-exercise>span,.superset>span>span{
+  display: flex;
+  align-items: center;
+}
+.superset{
+  position: relative;
+  z-index: 1;
+}
+.superset>h4{
+  color: #D8E4FF;
+  font-weight: bold;
+  margin-top: 0.2vw;
+  margin-right: 0.5vw;
+  text-transform: uppercase;
+  font-size: 1.3vw;
+  display: inline;
+}
+.superset>button{
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  font-size: 1.3vw;
+  color: #72cbbe;
+  outline: 1px solid #72cbbe;
+}
+.first-input{
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0.3vw;
+  padding-left: 1vw;
+  margin-bottom: 0.5vw;
+  border-radius: 0.5vw;
+}
+.other-input{
+      width: 5ch;
+      margin: 0 0.5vw;
+      border-radius: 0.5vw;
+       padding: 0.3vw;
+       border: none;
+}
+.submit{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #D8E4FF;
+  color: #35605A;
+  border: none;
+  text-transform: uppercase;
+  font-size: 1vw;
+  padding: 0.5vw 1vw; 
+  margin: 0.1vw;
+}
+.exercise-info{
+  background: #133144;
+  width: 95%;
+  margin: auto;
+  margin-top: 2%;
+  padding: 0.5vw 0.5vw 0.5vw 0.5vw;
+  position: relative;
+}
+.superset-info{
+  margin-top: 0.5vw;
+}
+.exercise-info h4{
+  text-transform: uppercase;
+  font-weight: lighter;
+  color: white;
+  margin: 0;
+}
+.superset-info>h3{
+  margin: 0.3vw 0;
+  font-size: 1vw;
+  position: relative;
+  color: #72cbbe;
+}
+.superset-info>h3:after{
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 0.10vw;
+  bottom: 0;
+  left: 0;
+  background: #72cbbe;
+}
+.exercise-info>h4,.superset-info>h4{
+ font-size: 1.5vw;
+ width: 100%;
+ overflow: hidden;
+ text-transform: capitalize;
+}
+.flex-inline{
+  display: flex;
+}
+.flex-inline > h4{
+  margin: 0.5vw;
+  color: #D8E4FF;
+  font-size: 0.9vw;
+}
+.flex-inline>h4>span{
+  color: white;
+  font-weight: bold;
+}
+.remove-item{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10%;
+  background: #72cbbe;
+  height: 100%;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  display: grid;
+  place-content: center;
+  font-size: .7vw;
+  z-index: 2;
+  cursor: pointer;
+}
+.edit-item{
+  right: 3.3vw;
+    background: white;
+}
+.previous-timer{
+  width: 15vw;
+  height: 30vw;
+  float: right;
+  margin-right: 2vw;
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.previous-timer>div::-webkit-scrollbar{
+  display: none;
+}
+.previous-timer p{
+  margin: 0;
+  font-size: 1.5vw;
+}
+.previous-timer>div{
+  overflow-y: scroll;
+  height: 100%;
+}
+.float-left{
+  float: left;
+}
+.float-left>p{
+  display: inline;
+  font-size: 0.8vw;
+  color: #b5b5b5;
+}
+
+.options{
+    width: 38vw;
+    height: 27vw;
+    margin-top: 2vw;
+    background: #061b28;
+    outline: 2px solid var(--el-background);
+    padding: 1vw;
+}
+
+.set-timer>div{
+  display: flex;
+  align-items: center;
+}
+
+.set-timer>div>.checkbox{
+  display: inline;
+  outline: none;
+  margin-right: 1vw;
+}
+.set-timer>div>input[type="text"]{
+  margin-left: 4vw;
+}
+.set-timer p{
+  display: inline;
+  font-size: 1vw;
+  text-transform: uppercase;
+}
+.set-timer div>input[type="checkbox"]{
+  width: 1vw;
+  height: 1vw;
+}
+.set-timer .graydText{
+  color: #b5b5b5;
+  font-size: 0.9vw;
+}
+
+@media screen and (max-width: 1100px){
+  .home{
+    height: unset;
+  }
+  .grid{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .timer{
+    font-size: 22vw;
+    text-align: center;
+  }
+  .start-timer{
+    font-size: 5vw;
+    margin: 0 2vw;
+    padding: 2vw;
+    border-radius: 5vw;
+  }
+  .float-left>p{
+    display: none;
+  }
+  .options{
+    width: 97%;
+    left: 2vw;
+    position: relative;
+  }
+  .set-timer div>input[type="checkbox"]{
+    width: 4vw;
+    height: 4vw;
+  }
+  .set-timer p{
+    font-size: 2vw;
+  }
+  .set-timer .graydText{
+    font-size: 1.9vw;
+  }
+  .other-input{
+    padding: 0.7vw;
+  }
+  .add-workout-component{
+    height: 100%;
+  }
+  .add-workout-component>.wrapper{
+    width: 90vw;
+    height: 68vw;
+  }
+  .close-component>svg{
+    width: 5vw;
+    height: 5vw;
+  }
+  .normal-exercise h5, .superset h5{
+    font-size: 3.1vw;
+  }
+  .first-input{
+    padding: 0.7vw;
+    margin-bottom: 2.5vw;
+  }
+  .superset>h4,.superset>button{
+    font-size: 2.5vw;
+  }
+  .submit{
+    font-size: 3vw;
+  }
+  .workout-list{
+    width: 90vw;
+    height: 75vh;
+    margin-top: 4vw;
+  }
+  .add-new-workout{
+    font-size: 3.5vw;
+    padding: 2.5vw;
+  }
+  .exercise-info>h4, .superset-info>h4{
+    font-size: 5.5vw;
+  }
+  .flex-inline > h4{
+    font-size: 2.9vw;
+  }
+  .remove-item{
+    width: 7%;
+    font-size: 1.7vw;
+  }
+  .edit-item{
+    right: 6vw;
+
+  }
+  .previous-timer{
+    height: 37vw;
+  }
+  .previous-timer>p{
+        font-size: 3vw;
+  }
+}

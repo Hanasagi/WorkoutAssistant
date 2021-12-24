@@ -1,0 +1,79 @@
+<main class="home">
+    <div v-if="addExercise" class="add-workout-component">
+      <div class="wrapper">
+        <div class="close-component" @click="openComponent(false)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"/></svg>
+        </div>
+        <form @submit="saveExercise">
+          <div class="normal-exercise">
+           <h5>Exercise name</h5>
+            <input  class="first-input" type="text" name="normal-exercise" required>
+            <span><h5>Number of reps</h5>
+            <input ref="inputOne" class="other-input" type="text" name="normal-reps" @input="checkValidity" max-length="2" required>
+            <h5>Number of sets</h5>
+            <input ref="inputTwo" class="other-input" type="text" name="normal-sets" @input="checkValidity" max-length="2" required></span>
+        </div>
+         <div class="superset">
+          <h4>Doing superset ?</h4>
+          <button @click="addSuperset">Add another exercise</button> 
+          <span v-if="superset">
+            <h5>Exercise name</h5>
+            <input class="first-input" type="text" name="superset-exercise" max-length="2" required>
+            <span><h5>Number of reps</h5>
+            <input ref="inputThree" class="other-input" type="text" name="superset-reps" @input="checkValidity" max-length="2" required>
+            </span>
+          </span>
+        </div>
+        <input type="submit" class="submit" value="SAVE">
+        </form>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="program-wrapper a">
+        <div class="workout-list">
+          <button class="add-new-workout" @click="openComponent(true)">+ ADD A NEW EXERCISE</button>
+          <div v-if="program.length!==0" ref="exerciseList">
+            <div  v-for="(item,index) in program" :key="item" :data-index="index" class="exercise-info item-index">
+              <div class="remove-item" @click="removeItem">REMOVE</div>
+              <div class="remove-item edit-item" @click="editItem">EDIT</div>
+              <h4>{{item.exerciseName}}</h4>
+              <div class="flex-inline">
+                <h4>Number of Reps: <span>{{item.repsNumber}}</span></h4>
+                <h4>Number of Sets Left: <span>{{item.setsNumber}}</span></h4>
+              </div>
+              <div v-if="item.supersetExerciseName!==undefined" class="superset-info">
+                <h3>Bisets</h3>
+                  <h4>{{item.supersetExerciseName}}</h4>
+                  <div class="flex-inline">
+                    <h4>Number of Reps: <span>{{item.supersetRepsNumber}}</span></h4>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timer-wrapper b">
+        <div class="timer">
+          <span ref="hours">00</span>:<span ref="minutes">00</span>:<span ref="seconds">00</span>.<span ref="ms" class="ms">00</span>
+        </div>
+        <div class="float-left">
+          <button ref="startTimer" class="start-timer" @click="startTimer" data-event="start">Start Timer</button>
+        <button class="start-timer" @click="resetTimer">reset Timer</button>
+        <p>PRESS SPACE TO START/STOP TIMER</p>
+        <div class="options">
+          <div class='set-timer'>
+            <div><input type="checkbox" class="checkbox" name="set-timer" ref="setTimer" @click="setRestTimer"><p>Set a rest timer</p><input type="text" @input="setRestTime" ref="restTimeMinute" class="other-input" data-time="minutes" maxlength="1" disabled><p class="graydText">minutes</p><input type="text" @input="setRestTime" ref="restTimeSeconds" class="other-input" data-time="seconds" maxlength="2" disabled><p class="graydText">seconds</p></div>
+           
+           <div><input type="checkbox" name="play-sound" @click="disableSound" disabled><p class="graydText">Play a sound when timer is up</p></div>
+           
+          </div>
+        </div>
+        </div>
+        
+         <div class="previous-timer">
+           <p>Previous time</p>
+           <div ref="previousTimerList"></div>
+         </div>
+      </div>
+    </div>
+  </main>
