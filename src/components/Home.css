@@ -39,6 +39,7 @@
   text-transform: uppercase;
   margin: 0 0.5vw;
   font-size: 1.1vw;
+  font-family: 'Inter';
 }
 .workout-list{
   width: 35vw;
@@ -59,6 +60,7 @@
   font-size: 1.5vw;
   padding: 0.5vw;
   color: white;
+  font-family: 'Inter';
 }
 .add-workout-component{
   background: rgba(0,0,0,0.7);
@@ -97,7 +99,6 @@ form{
 }
 .normal-exercise,.superset{
   width: 95%;
-  height: 41%;
   margin: auto;
   margin-top: 1vw;
   background: #0e2330;
@@ -127,13 +128,17 @@ form{
   font-size: 1.3vw;
   display: inline;
 }
-.superset>button{
+.superset button{
   text-transform: uppercase;
   background: none;
   border: none;
   font-size: 1.3vw;
   color: #72cbbe;
   outline: 1px solid #72cbbe;
+  font-family: 'Inter';
+}
+.superset button:last-of-type{
+  margin: 0.5vw 0;
 }
 .first-input{
   width: 100%;
@@ -161,7 +166,7 @@ form{
   text-transform: uppercase;
   font-size: 1vw;
   padding: 0.5vw 1vw; 
-  margin: 0.1vw;
+   width: 100%;
 }
 .exercise-info{
   background: #133144;
@@ -307,12 +312,12 @@ form{
     flex-direction: column-reverse;
   }
   .timer{
-    font-size: 22vw;
+    font-size: 20vw;
     text-align: center;
   }
   .start-timer{
-    font-size: 5vw;
-    margin: 0 2vw;
+    font-size: 6vw;
+    margin: 0 3vw;
     padding: 2vw;
     border-radius: 5vw;
   }
@@ -320,49 +325,61 @@ form{
     display: none;
   }
   .options{
-    width: 97%;
+    width: 95vw;
     left: 2vw;
     position: relative;
   }
   .set-timer div>input[type="checkbox"]{
-    width: 4vw;
-    height: 4vw;
+    width: 6vw;
+    height: 6vw;
   }
   .set-timer p{
-    font-size: 2vw;
+    font-size: 3vw;
   }
   .set-timer .graydText{
-    font-size: 1.9vw;
+    font-size: 2.9vw;
   }
   .other-input{
-    padding: 0.7vw;
+    padding: 1.7vw;
   }
   .add-workout-component{
     height: 100%;
   }
   .add-workout-component>.wrapper{
-    width: 90vw;
-    height: 68vw;
+    width: 100vw;
+    height: 94vw;
+    left: unset;
+    right: unset;
+    top: unset;
   }
   .close-component>svg{
     width: 5vw;
     height: 5vw;
   }
   .normal-exercise h5, .superset h5{
-    font-size: 3.1vw;
+    font-size: 3.5vw;
   }
   .first-input{
-    padding: 0.7vw;
+    padding: 1.7vw;
     margin-bottom: 2.5vw;
   }
-  .superset>h4,.superset>button{
-    font-size: 2.5vw;
+  .superset>h4,.superset button{
+    font-size: 3.5vw;
+    font-family: 'Inter';
+  }
+  .superset button:last-of-type{
+    margin: 1vw 0;
+  }
+  .superset-info>h3{
+    font-size: 4vw;
   }
   .submit{
     font-size: 3vw;
+    margin-top: 2vw;
+
   }
   .workout-list{
-    width: 90vw;
+    width: 95vw;
     height: 75vh;
     margin-top: 4vw;
   }
@@ -377,17 +394,14 @@ form{
     font-size: 2.9vw;
   }
   .remove-item{
-    width: 7%;
+    width: 9%;
     font-size: 1.7vw;
   }
   .edit-item{
-    right: 6vw;
+    right: 8vw;
 
   }
   .previous-timer{
-    height: 37vw;
-  }
-  .previous-timer>p{
-        font-size: 3vw;
+    display: none;
   }
 }

@@ -12,6 +12,7 @@
             <input ref="inputOne" class="other-input" type="text" name="normal-reps" @input="checkValidity" max-length="2" required>
             <h5>Number of sets</h5>
             <input ref="inputTwo" class="other-input" type="text" name="normal-sets" @input="checkValidity" max-length="2" required></span>
+            
         </div>
          <div class="superset">
           <h4>Doing superset ?</h4>
@@ -21,6 +22,14 @@
             <input class="first-input" type="text" name="superset-exercise" max-length="2" required>
             <span><h5>Number of reps</h5>
             <input ref="inputThree" class="other-input" type="text" name="superset-reps" @input="checkValidity" max-length="2" required>
+            </span>
+            <button @click="addTriset">Add another exercise</button>
+          </span>
+          <span v-if="triset">
+            <h5>Exercise name</h5>
+            <input class="first-input" type="text" name="triset-exercise" max-length="2" required>
+            <span><h5>Number of reps</h5>
+            <input ref="inputThree" class="other-input" type="text" name="triset-reps" @input="checkValidity" max-length="2" required>
             </span>
           </span>
         </div>
@@ -48,6 +57,13 @@
                     <h4>Number of Reps: <span>{{item.supersetRepsNumber}}</span></h4>
                   </div>
               </div>
+              <div v-if="item.trisetExerciseName!==undefined" class="superset-info">
+                <h3>Trisets</h3>
+                  <h4>{{item.trisetExerciseName}}</h4>
+                  <div class="flex-inline">
+                    <h4>Number of Reps: <span>{{item.trisetRepsNumber}}</span></h4>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +78,7 @@
         <p>PRESS SPACE TO START/STOP TIMER</p>
         <div class="options">
           <div class='set-timer'>
-            <div><input type="checkbox" class="checkbox" name="set-timer" ref="setTimer" @click="setRestTimer"><p>Set a rest timer</p><input type="text" @input="setRestTime" ref="restTimeMinute" class="other-input" data-time="minutes" maxlength="1" disabled><p class="graydText">minutes</p><input type="text" @input="setRestTime" ref="restTimeSeconds" class="other-input" data-time="seconds" maxlength="2" disabled><p class="graydText">seconds</p></div>
+            <div><input type="checkbox" class="checkbox" name="set-timer" ref="setTimer" @click="setRestTimer"><p>Set a rest timer</p><input type="text" inputmode="numeric" pattern="[0-9]*" @input="setRestTime" ref="restTimeMinute" class="other-input" data-time="minutes" maxlength="1" disabled><p class="graydText">minutes</p><input inputmode="numeric" pattern="[0-9]*" type="text" @input="setRestTime" ref="restTimeSeconds" class="other-input" data-time="seconds" maxlength="2" disabled><p class="graydText">seconds</p></div>
            
            <div><input type="checkbox" name="play-sound" @click="disableSound" disabled><p class="graydText">Play a sound when timer is up</p></div>
            

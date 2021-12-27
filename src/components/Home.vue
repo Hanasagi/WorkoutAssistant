@@ -9,6 +9,7 @@ export default {
       timer:null,
       program:[],
       superset:false,
+      triset:false,
       addExercise:false,
       edit:false,
       editIndex:0,
@@ -25,7 +26,8 @@ export default {
     this.checkStorageRestTimeValidity();
   if(localStorage.getItem("program")!==null){
       this.program=JSON.parse(localStorage.getItem("program"));
-      this.currentExerciseObject=this.program[this.currentExercise];
+      if(this.program.length!==0){
+        this.currentExerciseObject=this.program[this.currentExercise];
       let checkWorkoutList=setInterval(()=>{
         if(document.querySelector(".workout-list div")!==null){
           let el=this.$refs.exerciseList;
@@ -33,8 +35,11 @@ export default {
           clearInterval(checkWorkoutList);
         }
       },100)
+    }
     }else{
       this.program=[]
+      this.$refs.setTimer.disabled=true;
+      console.log(this.restTimer)
     }
 
     
@@ -54,26 +59,20 @@ export default {
       let ms=this.$refs.ms;
 
       if(e.target.getAttribute("data-event")==="start"){ 
- 
-        if(this.program.length!==0 || this.program!==null){
+        if(this.program.length!==0){
           
           if(parseInt(this.currentExerciseObject['setsNumber'])<=0 && this.currentExercise<this.program.length){
             let el=this.$refs.exerciseList;
             el.children[this.currentExercise].style.outline="none";
-            console.log(this.currentExercise<this.program.length)
               this.currentExercise++;
-            console.log(this.currentExercise,this.program.length)
             if(!(this.currentExercise>=this.program.length)){
                this.currentExerciseObject=this.program[this.currentExercise];
-            console.log(el.children)
-            console.log(this.currentExercise)
             el.children[this.currentExercise].style.outline="2px solid #35605A";
             this.currentExerciseObject['setsNumber']=parseInt(this.currentExerciseObject['setsNumber'])-1+''
             }
            
             
           }else if(parseInt(this.currentExerciseObject['setsNumber'])>0){
-            console.log(this.currentExercise);
             this.currentExerciseObject['setsNumber']=parseInt(this.currentExerciseObject['setsNumber'])-1+''
           }
         }
@@ -157,6 +156,17 @@ export default {
       }
       
     },
+    addTriset(e){
+      e.preventDefault();
+      e.stopPropagation();
+      if(this.triset===false){
+        this.triset=true;
+        e.target.innerText="REMOVE TRISET EXERCISE"
+      }else{
+        this.triset=false;
+        e.target.innerText="ADD TRISET EXERCISE"
+      }
+    },
     saveExercise(e){
       e.stopPropagation();
       e.preventDefault();
@@ -167,18 +177,21 @@ export default {
       if(this.superset){
         exercise['supersetExerciseName']=e.srcElement[4].value;
         exercise['supersetRepsNumber']=e.srcElement[5].value;
+        if(this.triset){
+          exercise['trisetExerciseName']=e.srcElement[7].value;
+        exercise['trisetRepsNumber']=e.srcElement[8].value;
+        }
       }
       if(!this.edit){
-        this.program.push(exercise)
-      }else{
-        this.program[this.editIndex]=exercise;
-        this.edit=false;
-      }
-      if(this.program.length===0){
-         
+        let previousLength=this.program.length
+        this.program.push(exercise);
+        if(previousLength===0){
+          this.$refs.setTimer.disabled=false;
+          this.checkStorageRestTimeValidity(); 
         let checkEl= setInterval(()=>{
             let el=this.$refs.exerciseList;
             if(el!==null){
+    
               el.children[this.currentExercise].style.outline="2px solid #35605A";
             this.currentExerciseObject=this.program[this.currentExercise];
             clearInterval(checkEl);
@@ -186,12 +199,17 @@ export default {
                      },100)
         
       }
-      console.log(this.currentExerciseObject)
+      }else{
+
+        this.program[this.editIndex]=exercise;
+        this.edit=false;
+      }
       localStorage.setItem("program",JSON.stringify(this.program))
       this.openComponent(false);
     },
     openComponent(bool){
-      if(!bool) {this.superset=false}
+      if(!bool) {this.superset=false;this.triset=false;document.body.style.overflow="visible";}
+      else{document.body.style.overflow="hidden";}
       if(this.edit) this.edit=false;
       this.addExercise=bool;
     },
@@ -205,6 +223,7 @@ export default {
       }
     },
     editItem(e){
+      document.body.style.overflow="hidden";
       let index=e.target.parentNode.getAttribute("data-index");
       this.editIndex=parseInt(index);
       this.edit=true;
@@ -304,7 +323,7 @@ export default {
       }
     },
     checkStorageRestTimeValidity(){
-        if(localStorage.getItem("restTime")!==null && localStorage.getItem("restTime")!==':'){
+        if(localStorage.getItem("restTime")!==null && localStorage.getItem("restTime")!==':' && this.program.length!==0){
         let restTime=localStorage.getItem("restTime");
         restTime=restTime.split(":")
         if(restTime[0]!=''){
