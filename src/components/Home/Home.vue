@@ -2,7 +2,8 @@
 </template>
 
 <script>
-import Navbar from "../Navbar/Navbar"
+import Navbar from "../Navbar/Navbar";
+import {callAPI} from "../ExerciseDBCall.js";
 
 export default {
   name: 'Home',
@@ -28,7 +29,39 @@ export default {
     }
   },
   mounted(){
+    callAPI();
     this.checkStorageRestTimeValidity();
+    let baseTime=0;
+    for(let i=0;i<10;i++){
+      baseTime+=30000;
+      let toTime=this.intToTime(baseTime);
+      let p=document.createElement("p");
+      console.log(toTime,this.restTime,toTime.substring(toTime.indexOf(":")+1)===this.restTime)
+      if(toTime===this.restTime){
+        p.classList.add("current")
+      }
+      p.innerText=`${toTime.substring(toTime.indexOf(":")+1,toTime.indexOf("."))}`;
+      p.addEventListener("click",(e)=>{
+        console.log(e.target.parentNode);
+        e.target.parentNode.classList.remove("rest-display-block");
+        e.target.parentNode.classList.add("rest-display-none");
+        e.target.parentNode.parentNode.cssText="pointer-events:initial;";
+        console.log(e.target.parentNode);
+        this.restTime="00:"+e.target.innerText+".00";
+        localStorage.restTime=this.restTime;
+         let current=document.querySelector(".current");
+          current.classList.remove("current");
+          e.target.classList.add("current");
+      })
+      this.$refs.restTimeList.append(p);
+    }
+  this.$refs.changeRestTime.addEventListener("click",(e)=>{
+    e.target.style.cssText="pointer-events:none;";
+    this.$refs.restTimeList.classList.remove("rest-display-none");
+    this.$refs.restTimeList.classList.add("rest-display-block");
+    
+  })
+
   if(localStorage.getItem("program")!==null){
       this.program=JSON.parse(localStorage.getItem("program"));
       if(this.program.length!==0){
@@ -57,7 +90,6 @@ export default {
   },
   methods:{
     startTimer(e){
-
       if(e.target.getAttribute("data-event")==="start"){ 
         let startTime= Date.now()-this.lap;
         if(this.program.length!==0){
@@ -293,7 +325,7 @@ export default {
         }
       }
       console.log(restTime)
-      restTime+=":00"
+      restTime+=".00"
       let split_restTime=restTime.split(":")
       this.restTime=restTime;
       this.$refs.restTimeMinute.placeholder=split_restTime[0]
@@ -313,7 +345,7 @@ export default {
         if(localStorage.getItem("restTime")!==null && localStorage.getItem("restTime")!==':'){
         let restTime=localStorage.getItem("restTime");
         this.restTime=restTime;
-        restTime=restTime.substring(0,restTime.lastIndexOf(':'));
+        restTime=restTime.substring(restTime.indexOf(":")+1,restTime.indexOf('.'));
         this.$refs.restTime.innerText=restTime;
         this.restTimer=true;
         if(localStorage.getItem("soundDisabled")!==null) {

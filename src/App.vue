@@ -1,17 +1,22 @@
 <template>
-  <Home/>
+<div>
+  <Navbar/>
+  <router-view/>
+</div>
+  
 </template>
 
 <script>
-import Home from './components/Home/Home.vue'
+import Navbar from "./components/Navbar/Navbar"
 
-export default {
-  name: 'App',
-  components: {
-    Home
+export default{
+  name:"App",
+  components:{
+    Navbar
   }
 }
 </script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway:wght@400;600&display=swap');

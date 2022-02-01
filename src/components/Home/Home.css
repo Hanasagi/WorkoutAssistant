@@ -7,16 +7,15 @@
 
 .grid {
   display: grid; 
-  grid-template-columns: 40vw 60vw; 
+  grid-template-columns: repeat(2,1fr); 
   z-index: 1;
   height: inherit;
   margin-top:1vw;
   overflow:hidden;
 }
 .a {
-  display: flex;
-    align-items: center;
-    justify-content: center;
+  max-width:800px;
+  margin: auto 0;
   }
 
 .timer-wrapper{
@@ -46,8 +45,6 @@
   font-size: var(--font-size-md);
   font-weight:600;
   font-family: var(--main-font);
-  border-top-left-radius: 10px;
-  border-bottom-right-radius: 10px;
 }
 .stopwatch-button:first-of-type{
   background:var(--main-color);
@@ -62,12 +59,10 @@
   height:90%;
 }
 .workout-list-edit{
-  background:var(--bg-second-level);
   width:15%;
   display:flex;
   flex-direction: column;
   height:21%;
-  border-top-left-radius: 10px;
 }
 .workout-list-edit>button{
   padding:0.7vw;
@@ -87,12 +82,12 @@
   transform:scale(0.9);
 }
 .workout-list{
-  width: 32vw;
+  max-width:800px;
+  width:100%;
   height: 90vh;
   margin: auto;
   background: var(--bg-second-level);
   overflow: hidden scroll;
-  border-bottom-right-radius: 10px;
 }
 .workout-list::-webkit-scrollbar{
   opacity:0;
@@ -225,7 +220,7 @@ form{
    width: 100%;
 }
 .exercise{
-  width:90%;
+  width:100%;
 }
 .exercise-title{
   font-size:var(--font-size-md);
@@ -342,7 +337,6 @@ form{
     margin-top: 2vw;
     background: var(--bg-second-level);
     padding: 1vw;
-    overflow:hidden;
     position:relative;
 }
 
@@ -351,7 +345,7 @@ form{
   align-items: center;
 }
 
-.set-rest-time p{
+.set-rest-time p:not(.rest-time-list p){
   display: inline;
   font-size: var(--font-size-base);
   font-family:var(--main-font);
@@ -360,8 +354,46 @@ form{
   margin-left:3vw;
   width:5vw;
   height:2vw;
-  border:1px solid var(--main-color);
+  border:3px solid var(--main-color);
   text-align: center;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  z-index:1;
+}
+.change-rest-time p:not(.rest-time-list p){
+  pointer-events:none;
+}
+.rest-time-list{
+  position:absolute;
+  width:110%;
+  height:10vmax;
+  background:var(--bg-third-level);
+  border:1px solid var(--main-color);
+  overflow:hidden scroll;
+  cursor:pointer;
+  transition:clip-path 0.2s ease-in-out;
+  z-index:120;
+}
+.rest-display-none{
+  display:none;
+}
+.rest-display-block{
+  display:block;
+}
+
+.rest-time-list::-webkit-scrollbar{
+  display:none;
+}
+.rest-time-list p{
+  font-family:var(--secondary-font);
+  padding:.3vw 0;
+  margin:0;
+  width:100%;
+}
+.current{
+  background:var(--main-color);
 }
 
 .estimated-time{
@@ -401,9 +433,6 @@ form{
     margin: 0 3vw;
     padding: 2vw;
     border-radius: 5vw;
-  }
-  .float-left>p{
-    display: none;
   }
   .options{
     width: 95vw;
@@ -457,7 +486,7 @@ form{
 
   }
   .workout-list{
-    width: 95vw;
+    
     height: 75vh;
     margin-top: 4vw;
   }

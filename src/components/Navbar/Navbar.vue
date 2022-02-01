@@ -7,7 +7,7 @@
             </svg>
             <h5 class="">Workout</h5>
         </div>
-        <div tabindex="0" class="navbar-menu">
+        <div tabindex="0" class="navbar-menu" @click="changeRoute" data-link="Exercise">
             <svg class="menu-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 22V6H22V13.543C22 17.65 16 16 16 16C16 16 17.518 22 13.362 22H6ZM24 14.386V4H4V24H14.189C17.352 24 24 16.777 24 14.386ZM14 16H9V15H14V16ZM19 12H9V13H19V12ZM19 9H9V10H19V9ZM21 2H2V21H0V0H21V2Z"/>
             </svg>
@@ -25,6 +25,9 @@
 export default {
   name: 'Navbar',
   methods:{
+      changeRoute(e){
+          this.$router.push({name: e.target.getAttribute("data-link")})
+      }
   },
 }
 </script>
@@ -48,6 +51,9 @@ export default {
         margin:0 1vw;
         cursor:pointer;
         transition:color 0.3s ease-in-out, fill 0.3s ease-in-out;
+    }
+    .navbar-menu *{
+        pointer-events: none;
     }
     .navbar-menu:hover{
         color:var(--secondary-color);
